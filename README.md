@@ -43,4 +43,4 @@ JS Side
   // => This result is from a wasm module 16
 ```
 
-Or look through some of the repos here to learn more.
+Or look through some of the code in this repo to learn more.
