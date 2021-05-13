@@ -6,7 +6,7 @@ Repo I'm using while I explore wasm-bindgen and JS as a way to get familiar with
 
 We write source code in Rust as a library, using the wasm-bindgen trait on anything we create in Rust ( Functions, Impl's, Struct's... )
 
-Cargo ( Rust's package manager and more ) has a package called ' wasm-pack ' that will actually build your rust lib into a WASM node package and then we can use that as a module inside Javascript and during exectuion or when we create this package we get a lot of helper funtions generated for us in the background as applying the wasm-bindgen trait added on a lot of great implementations to handle the messy stuff,
+Cargo ( Rust's package manager and more ) has a package called ' wasm-pack ' that will actually build your rust lib into a WASM node package and then we can use that as a module inside Javascript and during exectuion we use a lot of helper funtions generated for us in the background as applying the wasm-bindgen trait added on a lot of great implementations to handle the messy stuff,
 
 This mainly includes things like creating heaps or stacks in the background to manage memory and managing the JsTypes and data, functions on both sides to help with conversions between langage or between WASM and Rust or calling them, and defering types, as WASM can't store anything but number types and on the Rust side, we don't have access to things like JsObjects
 
