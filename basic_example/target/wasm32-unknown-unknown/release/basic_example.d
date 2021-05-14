@@ -1,0 +1,1 @@
+/Users/rob/Desktop/projects/Rust_WASM_Javascript/basic_example/target/wasm32-unknown-unknown/release/basic_example.wasm: /Users/rob/Desktop/projects/Rust_WASM_Javascript/basic_example/src/lib.rs build.rs

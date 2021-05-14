@@ -1,6 +1,5 @@
 import { add, fib, Product } from '../pkg';
 
-
 const resultOne = add(1, 2);
 
 const resultTwo = fib(4);
