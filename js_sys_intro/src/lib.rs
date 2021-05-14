@@ -6,7 +6,7 @@ use wasm_bindgen::prelude::*;
 */
 
 /*
-    js_sys::Array is exactly what you would think a js would be like,
+    js_sys::Array is exactly what you would expect a js arr to be like,
     they even include a lot of the native methods JS arrays have
 */
 
