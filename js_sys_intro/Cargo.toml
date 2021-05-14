@@ -1,0 +1,16 @@
+[package]
+name = "js_sys_intro"
+version = "0.1.0"
+authors = ["Rob"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2.74"
+# JS Sys allows us to interact with JsTypes like Array and allots us tons of methods native to JS
+# on the JS sys types
+js-sys = "0.3.51"

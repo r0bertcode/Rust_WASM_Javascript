@@ -1,0 +1,1 @@
+/Users/rob/Desktop/projects/Rust_WASM_Javascript/js_sys_intro/target/wasm32-unknown-unknown/release/js_sys_intro.wasm: /Users/rob/Desktop/projects/Rust_WASM_Javascript/js_sys_intro/src/lib.rs build.rs
