@@ -9,15 +9,6 @@ module.exports = {
     path: OUT_DIR,
     filename: 'bundle.js'
   },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        use: 'babel-loader',
-        exclude: /node_modules/,
-      },
-    ]
-  },
   experiments: {
     asyncWebAssembly: true,
   },
