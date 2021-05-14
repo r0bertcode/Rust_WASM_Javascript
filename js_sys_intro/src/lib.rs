@@ -3,14 +3,10 @@ use wasm_bindgen::prelude::*;
 /*
     Notice: we are using the js_sys crate this allows
     us defined JS types unlike using JsType or &JsType
-*/
 
-/*
     js_sys::Array is exactly what you would expect a js arr to be like,
     they even include a lot of the native methods JS arrays have
-*/
 
-/*
     Here we work with slice, and length and below
     on the last function we use the new word to
     generate a new empty array
