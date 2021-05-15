@@ -1,6 +1,7 @@
 use wasm_bindgen::prelude::*;
 
 /*
+
     Notice: we are using the js_sys crate this allows
     us defined JS types unlike using JsType or &JsType
 
@@ -10,6 +11,7 @@ use wasm_bindgen::prelude::*;
     Here we work with slice, and length and below
     on the last function we use the new word to
     generate a new empty array
+
 */
 
 #[wasm_bindgen]

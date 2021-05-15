@@ -1,19 +1,22 @@
 # Rust_WASM_Javascript
 Repo I'm using while I explore wasm-bindgen and JS as a way to get familiar with Rust and WASM
 
+Almost all of the content here can be found on the offical docs, this is more meant to document my progression,
+and to make source code avaliable for others trying to learn how to implement WASM with Rust to JS envoirments.
+
+Each folder will be it's own ' mini - project ' and will include a README going over the core concepts of that project
 
 # How dose it work?
 
 We write source code in Rust as a library, using the wasm-bindgen trait on anything we create in Rust ( Functions, Impl's, Struct's... )
 
-Cargo ( Rust's package manager and more ) has a package called ' wasm-pack ' that will actually build your rust lib into a WASM node package and then we can use that as a module inside Javascript and during exectuion we use a lot of helper funtions generated for us in the background as applying the wasm-bindgen trait added on a lot of great implementations to handle the messy stuff,
+Implementning this trait will give us additional helper functions as methods or in the background, mainly inside the JS enviorment, this icludes things like: Stacks/Heaps and helper functions to manage the pointers and memory or type conversions since WASM cannot accept types like String, so it must be converted, and thankfully all of this is done for us in the backgrond for anything valid that we added the wasm-bindgen trait upon.
+( Much better resource to understand all of what goes on behind the curtains: https://rustwasm.github.io/wasm-bindgen/ )
 
-This mainly includes things like creating heaps or stacks in the background to manage memory and managing the JsTypes and data, functions on both sides to help with conversions between langage or between WASM and Rust or calling them, and defering types, as WASM can't store anything but number types and on the Rust side, we don't have access to things like JsObjects
+We bundle this source code into a WASM node module, wasm-pack will do just that for you, generating a node package containing all of the relevant WASM files.
 
-So we are given these wonderful functions and types inside rust itself when we add the wasm-bindgen trait, here: https://rustwasm.github.io/wasm-bindgen/introduction.html is wonderful documentation going much deeper into this and everything you need to know to get started.
-
-And after all that complicated messy stuff is safely handled in the background when we are executing these functions and converting the types or giving us pointers so we can access the memeory, we are able to export these functions through WASM to the javascript enviorment and use them as a module.
-
+We then import this as a module into a JS enviorment and use it like we would any other.
+____
 Example:
 
 Rust Side
@@ -24,7 +27,7 @@ Rust Side
   #[wasm_bindgen]
   pub fn multiply(num1: i32, num2: i32) -> i32 {
       num1 * num2
-  }  
+  }
 ```
 
 JS Side
@@ -34,13 +37,10 @@ JS Side
 
   const result = wasm.multiplty(2, 8);
 
-  const btn = document.getElementById('btn');
-  
-  btn.addEventListener('click', () => {
-     console.log('This result is from a wasm module', result);
-  });
-  
+  console.log('This result is from a wasm module', result);
+
   // => This result is from a wasm module 16
 ```
 
-Or look through some of the code in this repo to learn more.
+____
+
