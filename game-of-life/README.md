@@ -1,69 +1,49 @@
-<div align="center">
+# Conway's Game of Life
 
-  <h1><code>wasm-pack-template</code></h1>
+This repo is source code from a tutorial in the docs, we implemenet Conway's game of life, ( https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life ) with the core game logic written in Rust, and then we compile it into WASM, and let JS read the cells by directly importing the memory from wasm ( yes, you can do that )
 
-  <strong>A template for kick starting a Rust and WebAssembly project using <a href="https://github.com/rustwasm/wasm-pack">wasm-pack</a>.</strong>
-
-  <p>
-    <a href="https://travis-ci.org/rustwasm/wasm-pack-template"><img src="https://img.shields.io/travis/rustwasm/wasm-pack-template.svg?style=flat-square" alt="Build Status" /></a>
-  </p>
-
-  <h3>
-    <a href="https://rustwasm.github.io/docs/wasm-pack/tutorials/npm-browser-packages/index.html">Tutorial</a>
-    <span> | </span>
-    <a href="https://discordapp.com/channels/442252698964721669/443151097398296587">Chat</a>
-  </h3>
-
-  <sub>Built with 🦀🕸 by <a href="https://rustwasm.github.io/">The Rust and WebAssembly Working Group</a></sub>
-</div>
-
-## About
-
-[**📚 Read this template tutorial! 📚**][template-docs]
-
-This template is designed for compiling Rust libraries into WebAssembly and
-publishing the resulting package to NPM.
-
-Be sure to check out [other `wasm-pack` tutorials online][tutorials] for other
-templates and usages of `wasm-pack`.
-
-[tutorials]: https://rustwasm.github.io/docs/wasm-pack/tutorials/index.html
-[template-docs]: https://rustwasm.github.io/docs/wasm-pack/tutorials/npm-browser-packages/index.html
-
-## 🚴 Usage
-
-### 🐑 Use `cargo generate` to Clone this Template
-
-[Learn more about `cargo generate` here.](https://github.com/ashleygwilliams/cargo-generate)
+Example.
 
 ```
-cargo generate --git https://github.com/rustwasm/wasm-pack-template.git --name my-project
-cd my-project
+import { Universe, Cell } from "../pkg";
+import { memory } from "../pkg/game_of_life_bg";
+
+//...
+
+  const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
+
+//...
 ```
 
-### 🛠️ Build with `wasm-pack build`
+-----
 
-```
-wasm-pack build
-```
 
-### 🔬 Test in Headless Browsers with `wasm-pack test`
+ If you want to learn more, I highly reccomend looking through the source code, the core login revolves around using a vector as Matrix, and traversing it and counting the values of surounding cells to calculate what the cell with be in the next generation ( tick ) of the game.
 
-```
-wasm-pack test --headless --firefox
-```
+ Example. ( Tick function )
 
-### 🎁 Publish to NPM with `wasm-pack publish`
+ ```
+    pub fn tick(&mut self) {
+        let mut next = self.cells.clone();
 
-```
-wasm-pack publish
-```
+        for row in 0..self.height {
+            for col in 0..self.width {
+                let idx = self.get_index(row, col);
+                let cell = self.cells[idx];
+                let live_neighbors = self.live_neighbor_count(row, col);
 
-## 🔋 Batteries Included
+                let next_cell = match (cell, live_neighbors) {
+                    (Cell::Alive, x) if x < 2 => Cell::Dead,
+                    (Cell::Alive, 2) | (Cell::Alive, 3) => Cell::Alive,
+                    (Cell::Alive, x) if x > 3 => Cell::Dead,
+                    (Cell::Dead, 3) => Cell::Alive,
+                    (otherwise, _) => otherwise,
+                };
 
-* [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) for communicating
-  between WebAssembly and JavaScript.
-* [`console_error_panic_hook`](https://github.com/rustwasm/console_error_panic_hook)
-  for logging panic messages to the developer console.
-* [`wee_alloc`](https://github.com/rustwasm/wee_alloc), an allocator optimized
-  for small code size.
+                next[idx] = next_cell;
+            }
+        }
+
+        self.cells = next;
+    }
+ ```
