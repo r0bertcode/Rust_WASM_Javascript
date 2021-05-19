@@ -1,13 +1,5 @@
-mod utils;
-
 use wasm_bindgen::prelude::*;
 use std::fmt;
-
-// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-// allocator.
-#[cfg(feature = "wee_alloc")]
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
 // repr(u8) Will allow each cell to represnted as a single byte
@@ -28,23 +20,27 @@ pub struct Universe {
 
 #[wasm_bindgen]
 impl Universe {
+    // Returns width
     pub fn width(&self) -> u32 {
         self.width
     }
 
+    // Returns height
     pub fn height(&self) -> u32 {
         self.height
     }
 
+    // Return's a raw pointer to the Cells buffer
     pub fn cells (&self) -> *const Cell {
         self.cells.as_ptr()
     }
 
-
+    // Formula to get index of matrix from 1D Vector ( Returnings a U-size to point )
     fn get_index(&self, row: u32, column: u32) -> usize {
         (row * self.width + column) as usize
     }
 
+    // Returns a count of live neighbors on the matrix
     fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
         let mut count = 0;
         // Traverse nearby cells
@@ -67,6 +63,7 @@ impl Universe {
         count
     }
 
+    // Inifinite tick function, is responsible for updating the Cell's vector every generation
     pub fn tick(&mut self) {
         // Clone a mutable version of the current universe vector
         let mut next = self.cells.clone();
@@ -102,8 +99,8 @@ impl Universe {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Universe {
         // Define height , width of our universe ( Cells x Cells )
-        let width = 324;
-        let height = 324;
+        let width = 306;
+        let height = 306;
 
         let cells = (0..width * height)
             .map(|i| {
