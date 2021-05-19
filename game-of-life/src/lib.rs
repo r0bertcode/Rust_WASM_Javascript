@@ -1,5 +1,4 @@
 use wasm_bindgen::prelude::*;
-use std::fmt;
 
 #[wasm_bindgen]
 // repr(u8) Will allow each cell to represnted as a single byte
@@ -129,19 +128,4 @@ impl Universe {
     // pub fn render(&self) -> String {
     //     self.to_string()
     // }
-}
-
-// Display formatter, to define if cell should be empty or full
-impl fmt::Display for Universe {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        for line in self.cells.as_slice().chunks(self.width as usize) {
-            for &cell in line {
-                let symbol = if cell == Cell::Dead { '◻' } else { '◼' };
-                write!(f, "{}", symbol)?;
-            }
-            write!(f, "\n")?;
-        }
-
-        Ok(())
-    }
 }
